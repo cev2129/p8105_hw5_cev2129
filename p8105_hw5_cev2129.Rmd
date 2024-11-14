@@ -1,0 +1,11 @@
+---
+title: "p8105_hw5_cev2129"
+output: html_document
+date: "2024-11-14"
+---
+
+```{r}
+library(tidyverse)
+library(rvest)
+set.seed(1)
+```
