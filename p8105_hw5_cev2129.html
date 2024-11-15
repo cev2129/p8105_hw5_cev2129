@@ -481,16 +481,34 @@ summary</code></pre>
 <pre class="r"><code>baltimore = homicide_data |&gt;
   filter(city_state == &quot;Baltimore, MD&quot;)
 
-prop_test &lt;- prop.test(
+prop_test = prop.test(
   x = sum(baltimore[[&quot;disposition&quot;]] %in% c(&quot;Closed without arrest&quot;, &quot;Open/No arrest&quot;)), 
   n = nrow(baltimore)) |&gt;
   broom::tidy() 
 
-proportion_estimate &lt;- prop_test |&gt;
+proportion_estimate = prop_test |&gt;
   pull(estimate) 
 
-conf_interval &lt;- prop_test |&gt;
+conf_interval = prop_test |&gt;
   select(conf.low, conf.high)</code></pre>
+<pre class="r"><code>city_prop_tests &lt;- homicide_data |&gt;
+  group_by(city_state) |&gt;
+  summarise(
+    results = list(prop.test(
+      x = sum(disposition %in% c(&quot;Closed without arrest&quot;, &quot;Open/No arrest&quot;)),
+      n = n()
+    ))
+  ) |&gt;
+  mutate(
+    tidy = purrr::map(results, broom::tidy)
+  ) |&gt;
+  unnest(cols = c(tidy)) |&gt;
+  select(city_state, estimate, conf.low, conf.high)</code></pre>
+<pre><code>## Warning: There was 1 warning in `summarise()`.
+## ℹ In argument: `results = list(...)`.
+## ℹ In group 49: `city_state = &quot;Tulsa, AL&quot;`.
+## Caused by warning in `prop.test()`:
+## ! Chi-squared approximation may be incorrect</code></pre>
 
 
 

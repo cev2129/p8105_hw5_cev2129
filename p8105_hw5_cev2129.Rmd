@@ -85,18 +85,37 @@ summary = homicide_data |>
   )
 summary
 ``` 
+
 ```{r}
 baltimore = homicide_data |>
   filter(city_state == "Baltimore, MD")
 
-prop_test <- prop.test(
+prop_test = prop.test(
   x = sum(baltimore[["disposition"]] %in% c("Closed without arrest", "Open/No arrest")), 
   n = nrow(baltimore)) |>
   broom::tidy() 
 
-proportion_estimate <- prop_test |>
+proportion_estimate = prop_test |>
   pull(estimate) 
 
-conf_interval <- prop_test |>
+conf_interval = prop_test |>
   select(conf.low, conf.high)
 ```
+
+```{r}
+city_prop_tests <- homicide_data |>
+  group_by(city_state) |>
+  summarise(
+    results = list(prop.test(
+      x = sum(disposition %in% c("Closed without arrest", "Open/No arrest")),
+      n = n()
+    ))
+  ) |>
+  mutate(
+    tidy = purrr::map(results, broom::tidy)
+  ) |>
+  unnest(cols = c(tidy)) |>
+  select(city_state, estimate, conf.low, conf.high)
+``` 
+
+
