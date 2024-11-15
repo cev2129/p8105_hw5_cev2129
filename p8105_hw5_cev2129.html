@@ -484,7 +484,13 @@ summary</code></pre>
 prop_test &lt;- prop.test(
   x = sum(baltimore[[&quot;disposition&quot;]] %in% c(&quot;Closed without arrest&quot;, &quot;Open/No arrest&quot;)), 
   n = nrow(baltimore)) |&gt;
-  broom::tidy()</code></pre>
+  broom::tidy() 
+
+proportion_estimate &lt;- prop_test |&gt;
+  pull(estimate) 
+
+conf_interval &lt;- prop_test |&gt;
+  select(conf.low, conf.high)</code></pre>
 
 
 
