@@ -56,4 +56,15 @@ q2 = q2_power |>
 q2
 ```
 
+```{r}
+plot1 = ggplot(q2, aes(x = mu)) +
+  geom_line(aes(y = mean_estimate), color = "red",linetype = "solid") +
+  geom_point(aes(y = mean_estimate), color = "red")
+plot1
+
+plot2 = plot1 + geom_line(aes(y = mean_rejected), color = "yellow", linetype = "dashed") +
+  geom_point(aes(y = mean_rejected), size = 3, color = "yellow") 
+
+plot2
+```
 
