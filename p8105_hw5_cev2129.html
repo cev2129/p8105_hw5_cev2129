@@ -478,6 +478,13 @@ summary</code></pre>
 ##  9 Chicago, IL      5535     4073
 ## 10 Cincinnati, OH    694      309
 ## # ℹ 41 more rows</code></pre>
+<pre class="r"><code>baltimore = homicide_data |&gt;
+  filter(city_state == &quot;Baltimore, MD&quot;)
+
+prop_test &lt;- prop.test(
+  x = sum(baltimore[[&quot;disposition&quot;]] %in% c(&quot;Closed without arrest&quot;, &quot;Open/No arrest&quot;)), 
+  n = nrow(baltimore)) |&gt;
+  broom::tidy()</code></pre>
 
 
 

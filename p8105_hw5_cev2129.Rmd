@@ -84,4 +84,13 @@ summary = homicide_data |>
     unsolved = sum(disposition %in% c("Closed without arrest", "Open/No arrest"))  
   )
 summary
+``` 
+```{r}
+baltimore = homicide_data |>
+  filter(city_state == "Baltimore, MD")
+
+prop_test <- prop.test(
+  x = sum(baltimore[["disposition"]] %in% c("Closed without arrest", "Open/No arrest")), 
+  n = nrow(baltimore)) |>
+  broom::tidy()
 ```
