@@ -118,4 +118,17 @@ city_prop_tests <- homicide_data |>
   select(city_state, estimate, conf.low, conf.high)
 ``` 
 
+```{r}
+city_plot <- city_prop_tests |>
+  arrange(desc(estimate)) |>  
+  mutate(city_state = factor(city_state, levels = city_state)) |>  
+  ggplot(aes(x = city_state, y = estimate)) +
+  geom_point(size = 0.5) +  
+  geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 0.1) +
+  coord_flip() + 
+  theme_minimal() + 
+  theme(
+    axis.text.y = element_text(size = 4))
 
+city_plot  
+```
