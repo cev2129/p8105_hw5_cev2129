@@ -67,4 +67,21 @@ plot2 = plot1 + geom_line(aes(y = mean_rejected), color = "yellow", linetype = "
 
 plot2
 ```
+##Problem 3
+```{r}
+library(dplyr)
+library(readr)
 
+homicide_data = read_csv("https://raw.githubusercontent.com/washingtonpost/data-homicides/refs/heads/master/homicide-data.csv")
+
+homicide_data = homicide_data |>
+  mutate(city_state = paste(city, state, sep = ", "))
+
+summary = homicide_data |>
+  group_by(city_state) |>
+  summarize(
+    total = n(),  
+    unsolved = sum(disposition %in% c("Closed without arrest", "Open/No arrest"))  
+  )
+summary
+```
