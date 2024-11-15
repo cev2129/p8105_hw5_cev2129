@@ -44,7 +44,16 @@ ggplot(q2_power, aes(x = mu, y = power)) +
 ```
 
 ```{r}
+null_rejected = q2_results |>
+  group_by(mu) |>
+  summarize(
+    mean_rejected = mean(estimate[p.value < 0.05], na.rm = TRUE)  
+  )
 
+q2 = q2_power |>
+  left_join(null_rejected, by = "mu")
+
+q2
 ```
 
 
