@@ -8,4 +8,23 @@ date: "2024-11-14"
 library(tidyverse)
 library(rvest)
 set.seed(1)
-```
+``` 
+
+##Problem 2
+
+```{r}
+q2_t_test = function(mu, iterations = 5000) { 
+  replicate(iterations, {
+    data <- rnorm(n = 30, mean = mu, sd = 5)
+    t_test <- t.test(data, mu = 0) 
+    broom::tidy(t_test)  
+  }, simplify = FALSE) |>
+    bind_rows() |>
+    mutate(mu = mu)
+}
+
+values = c(0, 1, 2, 3, 4, 5, 6) 
+
+q2_results = map_dfr(values, q2_t_test) 
+
+``` 
