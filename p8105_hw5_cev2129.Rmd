@@ -37,3 +37,14 @@ q2_power = q2_results |>
 q2_power
 ```
 
+```{r}
+library(ggplot2)
+ggplot(q2_power, aes(x = mu, y = power)) + 
+  geom_point()
+```
+
+```{r}
+
+```
+
+
