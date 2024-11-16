@@ -104,8 +104,7 @@ plot2 = plot1 + geom_line(aes(y = mean_rejected), color = "yellow", linetype = "
 plot2
 ```
 
-The sample average of 𝜇̂ across tests for which the null is rejected is not approximately equal to the true value of 𝜇 because of selection bias. The sample average of  𝜇̂ for which the null is rejected has selection bias as observations are selected based on the condition that the null was rejected, where this is not the case for the true value of 𝜇.
-
+The sample average of the estimates of 𝜇̂ across the tests where the null hypothesis is rejected is approximately equal to the true value of 𝜇 for certain values of 𝜇, specifically for 𝜇 = 4, 5, and 6. This  is because for larger effect sizes, we tend to have a larger sample of 𝜇̂ values, and with a larger sample size, the average of these estimates tends to be closer to the true mean. 
 
 **Problem 3**
 ```{r}
