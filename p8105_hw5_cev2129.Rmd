@@ -10,6 +10,38 @@ library(rvest)
 set.seed(1)
 ``` 
 
+**Problem 1**
+```{r}
+bday_function = function(n) {
+  bday <- sample(1:365, n, replace = TRUE)
+  if (length(unique(bday)) < n) {
+    return(TRUE)  
+  } else {
+    return(FALSE) 
+  }
+} 
+
+bday_prob = function(max_group_size, simulations = 10000) {
+  prob = numeric(max_group_size - 1)
+  for (n in 2:max_group_size) {
+    results <- replicate(simulations, bday_function(n))
+    prob[n - 1] <- mean(results)  
+  }
+  return(prob)
+  }
+
+group_sizes = 2:50
+prob = bday_prob(50)
+
+bday_prob_data = data.frame(Group_Size = group_sizes, Probability = prob)
+
+ggplot(bday_prob_data, aes(x = Group_Size, y = Probability)) +
+  geom_line() + 
+  geom_point() 
+```
+
+The graph shows that there is a positive association between group size and probability that two people share a birthday. 
+
 
 **Problem 2**
 ```{r}
